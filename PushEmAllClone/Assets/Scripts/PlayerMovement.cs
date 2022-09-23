@@ -23,6 +23,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        PlayerMover();
+    }
+
+
+    private void PlayerMover()
+    {
         if (anim)
         {
             anim.SetBool("isMoving", _isMoving);
@@ -55,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
             gameObject.transform.Translate(Vector3.forward*Time.deltaTime*movementSpeed);
         }
     }
-
+    
     public bool IsMoving()
     {
         return _isMoving;

@@ -8,7 +8,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float rotationSpeed = 500;
 
     Animator anim;
+    private GameManager gm;
 
+    
     private Touch _touch;
 
     private Vector3 _touchDown;
@@ -18,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _isMoving;
     void Start()
     {
+        gm = GameObject.FindObjectOfType<GameManager>();
         anim = gameObject.GetComponent<Animator>();
     }
 

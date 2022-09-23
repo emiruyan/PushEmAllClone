@@ -6,19 +6,22 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     private Rigidbody rb;
+    private GameManager gm;
     
     //GameArea küçük olduğu için NavMesh kullanmıyoruz.
     [SerializeField] private float attackRange;//Enemy'nin atak mesafesi
     [SerializeField] private float moveSpeed;//Enemy'nin hareket hızı
     [SerializeField] private float forcePower;//itme gücü
-    private float minHeight = -1;//Enemy'minimum ölüm pozisyonu
     
+    private float minHeight = -1;//Enemy'minimum ölüm pozisyonu
     private float distance;//Enemy ile Player arasındaki mesafe
     private GameObject player;
     private Vector3 temp;
+    private bool increaseScore;
 
     private void Awake()
     {
+        gm = GameObject.FindObjectOfType<GameManager>();//GameManager'ı buluyoruz
         player = GameObject.FindWithTag("Player");//Tag'ı Player olanı bul
         rb = GetComponent<Rigidbody>();
     }
@@ -31,12 +34,21 @@ public class EnemyController : MonoBehaviour
 
     private void EnemyDeath()
     {
-        if (transform.position.y <= minHeight)
+        if (transform.position.y <= minHeight)//transform.position.y minHeight'ten küçük eşit ise;
         {
-            Debug.Log("Enemy Dead");
+            if (increaseScore == false)
+            {
+                StartCoroutine(IncreaseScore());
+            }
         }
     }
 
+    IEnumerator IncreaseScore()
+    {
+        yield return new WaitForEndOfFrame();
+        gm.IncreaseScore();
+        increaseScore = true;
+    }
     private void EnemyMovement()
     {
         temp = player.transform.position;//player transformunu temp'e atadık
@@ -59,8 +71,6 @@ public class EnemyController : MonoBehaviour
             { 
                 rb.AddForce(-transform.forward* forcePower);//Player'a geriye doğru bir güç uygulasın
             }
-
-           
         }
     }
 }

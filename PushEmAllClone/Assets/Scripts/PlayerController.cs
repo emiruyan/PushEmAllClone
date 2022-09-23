@@ -8,10 +8,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     [SerializeField] private float forcePower;//itme gücü
     private float minHeight = -1;
+    private GameManager gm;
 
 
     private void Awake()
     {
+        gm = FindObjectOfType<GameManager>();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -30,9 +32,9 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerDeath()
     {
-        if (transform.position.y <= minHeight)
+        if (transform.position.y <= minHeight)//transform.position.y minHeight'ten küçük eşit ise;
         {
-            Debug.Log("You Dead");
+            gm.PlayerDead();//GameManager içinde ki PlayerDead fonksiyonunu çalıştır
         }
     }
 }

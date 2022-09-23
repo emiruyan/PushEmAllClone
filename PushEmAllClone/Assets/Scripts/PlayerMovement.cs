@@ -23,11 +23,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        PlayerMover();
+        PlayerInputMover();
     }
 
 
-    private void PlayerMover()
+    private void PlayerInputMover()
     {
         if (anim)
         {
